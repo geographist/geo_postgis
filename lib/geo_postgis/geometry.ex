@@ -81,6 +81,10 @@ if Code.ensure_loaded?(Ecto.Type) do
       {:ok, Geo.JSON.decode!(geom)}
     end
 
+    def cast(%{"type" => "FeatureCollection", "features" => _} = geom) do
+      {:ok, Geo.JSON.decode!(geom)}
+    end
+
     def cast(geom) when is_binary(geom) do
       {:ok, geom |> Geo.PostGIS.Config.json_library().decode!() |> Geo.JSON.decode!()}
     end
