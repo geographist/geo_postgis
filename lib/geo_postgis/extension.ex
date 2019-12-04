@@ -37,6 +37,8 @@ defmodule Geo.PostGIS.Extension do
   """
 
   @geo_types [
+    Geo.Feature,
+    Geo.FeatureCollection,
     Geo.GeometryCollection,
     Geo.LineString,
     Geo.LineStringZ,
