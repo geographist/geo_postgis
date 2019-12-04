@@ -156,4 +156,34 @@ defmodule Geo.PostGIS.Test do
     {:ok, result} = Postgrex.query(pid, "SELECT * FROM multipolygon_test", [])
     assert(result.rows == [[42, geo]])
   end
+
+  test "insert geometrycollection", context do
+    pid = context[:pid]
+
+    geo = %Geo.GeometryCollection{
+      geometries: [
+        %Geo.Point{coordinates: {30, -90}, srid: 4326},
+        %Geo.Polygon{
+          coordinates: [
+            [{35, 10}, {45, 45}, {15, 40}, {10, 20}, {35, 10}],
+            [{20, 30}, {35, 35}, {30, 20}, {20, 30}]
+          ],
+          srid: 4326
+        }
+      ],
+      properties: %{},
+      srid: 4326
+    }
+
+    {:ok, _} =
+      Postgrex.query(
+        pid,
+        "CREATE TABLE geometrycollection_test (id int, geom geometry)",
+        []
+      )
+
+    {:ok, _} = Postgrex.query(pid, "INSERT INTO geometrycollection_test VALUES ($1, $2)", [42, geo])
+    {:ok, result} = Postgrex.query(pid, "SELECT * FROM geometrycollection_test", [])
+    assert(result.rows == [[42, geo]])
+  end
 end
