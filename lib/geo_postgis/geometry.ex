@@ -19,7 +19,8 @@ if Code.ensure_loaded?(Ecto.Type) do
       MultiLineStringZ,
       MultiPolygon,
       MultiPolygonZ,
-      GeometryCollection
+      GeometryCollection,
+      FeatureCollection
     }
 
     @types [
@@ -54,7 +55,9 @@ if Code.ensure_loaded?(Ecto.Type) do
       MultiLineStringZ,
       MultiPolygon,
       MultiPolygonZ,
-      GeometryCollection
+      GeometryCollection,
+      Feature,
+      FeatureCollection
     ]
 
     @behaviour Ecto.Type
